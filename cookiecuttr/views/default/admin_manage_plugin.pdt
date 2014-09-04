@@ -1,0 +1,11 @@
+		<?php
+		$this->Widget->clear();
+		$this->Widget->create($this->_("CookiecuttrPlugin.admin_main", true));
+		?>
+		<div class="empty_section">
+			<div class="empty_box"><?php $this->_("CookiecuttrPlugin.next_version");?></div>
+		</div>
+
+		<?php
+		$this->Widget->end();
+		?>

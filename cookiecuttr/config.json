@@ -1,0 +1,15 @@
+{
+	"version": "1.0.0",
+	"name": "CookiecuttrPlugin.name" ,
+	"description": "The CookieCuttr plugin wraps up the popular CookieCuttr jQuery script which is designed to provide an attractive solution to complying with EU Cookie Laws.",
+	"authors": [
+		{
+			"name": "Mohamed Anouar Achoukhy - Naja7Host SARL ",
+			"url": "http://www.naja7host.com"
+		},
+        {
+			"name": ".:: Support us  , donate by PayPal ::. ",
+			"url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2FQKWFL73CV9N"
+		}
+    ]
+}
