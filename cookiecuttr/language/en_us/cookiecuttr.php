@@ -4,7 +4,14 @@ $lang['CookiecuttrPlugin.name'] = "CookieCuttr Plugin";
 $lang['CookiecuttrPlugin.admin_main'] = "Cookiecuttr Settings";
 $lang['CookiecuttrPlugin.next_version'] = "This Feature is NOT available in this version.";
 
-// Settings 
+// Settings
+$lang['CookiecuttrPlugin.settings.basic_heading'] = "Basic Settings";
+$lang['CookiecuttrPlugin.settings.help_heading'] = "Help";
+$lang['CookiecuttrPlugin.settings.style'] = "Select Css Style";
+$lang['CookiecuttrPlugin.settings.style_1'] = "Style 1 (default)";
+$lang['CookiecuttrPlugin.settings.style_2'] = "Style 2 (White on Bottom)";
+$lang['CookiecuttrPlugin.settings.field_save'] = "Save Settings";
+
 $lang['CookiecuttrPlugin.cookieAnalytics'] = " if you are just using a simple analytics package you can set this to true, it displays a simple default message with no privacy policy link - this is set to true by default. ";
 $lang['CookiecuttrPlugin.cookieDeclineButton'] = "if you’d like a decline button to (ironically) write a cookie into the browser then set this to true.";
 $lang['CookiecuttrPlugin.cookieAcceptButton'] = "set this to true to hide the accept button, its set to false by default ";
@@ -33,5 +40,10 @@ $lang['CookiecuttrPlugin.index.cookieDeclineButtonText'] = "Decline Cookies";
 $lang['CookiecuttrPlugin.index.cookieResetButtonText'] = "Reset Cookies";
 $lang['CookiecuttrPlugin.index.cookieMessage'] = "We use cookies, just to track visits to our website, we store no personal details. ";
 $lang['CookiecuttrPlugin.index.cookieWhatAreLinkText'] = " What are cookies?";
+
+
+// Messages
+$lang['CookieCuttrPlugin.!success.settings_saved'] = "The Cookiecuttr Settings has been successfully updated.";
+// $lang['CookiecuttrPlugin.!error.sitename'] = "The sitename doesn't exist";
 
 ?>

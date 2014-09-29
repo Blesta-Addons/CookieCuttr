@@ -16,8 +16,10 @@ class CookiecuttrPlugin extends Plugin {
 		// Load components required by this plugin
 		Loader::loadComponents($this, array("Input", "Record"));
 		
+		
+		$this->company_id = Configure::get("Blesta.company_id");
         // Load modules for this plugun
-        Loader::loadModels($this, array("ModuleManager"));
+        Loader::loadModels($this, array("ModuleManager", "Companies"));
 		$this->loadConfig(dirname(__FILE__) . DS . "config.json");
 	}
 	
@@ -30,8 +32,8 @@ class CookiecuttrPlugin extends Plugin {
 			
 		// Add the system overview table, *IFF* not already added
 		try {
-
-					
+			$value = array('style' => "1" );
+			$this->Companies->setSetting($this->company_id , "CookieCuttrPlugin", serialize($value) );			
 		}
 		catch(Exception $e) {
 			// Error adding... no permission?
@@ -51,6 +53,19 @@ class CookiecuttrPlugin extends Plugin {
 		
 		// Upgrade if possible
 		if (version_compare($this->getVersion(), $current_version, ">")) {
+			if (version_compare($current_version, "2.0.0", "<")) {
+				// Loader::loadComponents($this, array("Companies"));
+				try 
+				{
+					$value = array('style' => "1" );
+					$this->Companies->setSetting($this->company_id , "CookieCuttrPlugin", serialize($value) );
+				}
+				catch (Exception $e) {
+					// Error adding... no permission?
+					// $this->Input->setErrors(array('db'=> array('create'=>$e->getMessage())));
+					return;
+				}
+			}		
 			// Handle the upgrade, set errors using $this->Input->setErrors() if any errors encountered
 		}
 	}
@@ -61,14 +76,11 @@ class CookiecuttrPlugin extends Plugin {
      * @param int $plugin_id The ID of the plugin being uninstalled
      * @param boolean $last_instance True if $plugin_id is the last instance across all companies for this plugin, false otherwise
      */
-	public function uninstall($plugin_id, $last_instance) {
-		if (!isset($this->Record))
-			Loader::loadComponents($this, array("Record"));
-		
+	public function uninstall($plugin_id, $last_instance) {		
 		// Remove all tables *IFF* no other company in the system is using this plugin
 		if ($last_instance) {
 			try {
-
+				$this->Companies->unsetSetting($this->company_id , "CookieCuttrPlugin");
 			}
 			catch (Exception $e) {
 				// Error dropping... no permission?
@@ -96,22 +108,21 @@ class CookiecuttrPlugin extends Plugin {
 
 		$params = $event->getParams();
 		$return = $event->getReturnVal();
-	
-		// $params['controller'] = "admin_main"; // this is the controller file name client_main.php
-		// $params['action'] = "MyFunction"; // a function inside the appcontroller file set in $params['controller']
-		// $params['portal'] = "client"; // injest the markup in client side structure 		
-		// $event->setParams($params);
+
 		
         // Set return val if not set
         if (!isset($return['head']))
                 $return['head'] = null;
 				
         // Update return val -- ONLY set if client portal
-        if ($params['portal'] == "client")            
-			$return['head'] .= " 
+        if ($params['portal'] == "client") {
+		
+			$settings = unserialize($this->Companies->getSetting($this->company_id , "CookieCuttrPlugin")->value) ;
+			
+			$return['head']['cookiecuttr'] = " 
 				<script src='". WEBDIR . "plugins/cookiecuttr" . DS . "views" . DS . "default" . DS . "js/jquery.cookie.js'></script>		
 				<script src='". WEBDIR . "plugins/cookiecuttr" . DS . "views" . DS . "default" . DS . "js/jquery.cookiecuttr.js'></script>		
-				<link rel='stylesheet' href='". WEBDIR . "plugins/cookiecuttr" . DS . "views" . DS . "default" . DS . "css/styles.css'>
+				<link rel='stylesheet' href='". WEBDIR . "plugins/cookiecuttr" . DS . "views" . DS . "default" . DS . "css/style_". $settings['style']  .".css'>
 				<script>
 
 				$(document).ready(function () {
@@ -129,18 +140,7 @@ class CookiecuttrPlugin extends Plugin {
 				</script>
 				
 			" ;
-		
-		// echo json_encode($return);
-
-		// $return['head'] = file_get_contents($changelog) ;			
-		// $return['body_start'] = "<p>Set at top of body</p>";
-		// $return['body_end'] = "<p>Set at bottom of body</p>";
-		
-		// ob_start(); // Start output buffering		
-		// include $file; // Include the file		
-		// $contents = ob_get_clean(); // Get the contents of the buffer and close buffer.
-		
-		// $return['head'] = "<script>alert('".$params['portal']."');</script>" ;
+		}	
 		$event->setReturnVal($return);	
 		
 	}

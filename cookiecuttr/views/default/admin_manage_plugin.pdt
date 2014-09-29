@@ -1,11 +1,32 @@
 		<?php
 		$this->Widget->clear();
 		$this->Widget->create($this->_("CookiecuttrPlugin.admin_main", true));
+		$this->Form->create();
+		
 		?>
-		<div class="empty_section">
-			<div class="empty_box"><?php $this->_("CookiecuttrPlugin.next_version");?></div>
+		
+		<div class="inner">
+			<div class="title_row first">
+				<h3><?php $this->_("CookiecuttrPlugin.settings.basic_heading");?></h3>
+			</div>
+			<div class="pad">
+				<ul>
+					<li>
+						<?php
+						$this->Form->label($this->_("CookiecuttrPlugin.settings.style", true), "style");
+						$this->Form->fieldSelect("style", array( "1"  => $this->_("CookiecuttrPlugin.settings.style_1", true)  , "2"  => $this->_("CookiecuttrPlugin.settings.style_2", true) ), $settings['style'] , array('id' => "style"));				
+						?>
+					</li>
+				
+				</ul>
+			</div>
+			
+			<div class="button_row">
+				<a class="btn_right submit" href=""><?php $this->_("CookiecuttrPlugin.settings.field_save");?></a>
+			</div>	
 		</div>
-
+		
 		<?php
+		$this->Form->end();
 		$this->Widget->end();
 		?>
